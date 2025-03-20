@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仙途抉择</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>仙途抉择</h1>
+            <div class="status-bar">
+                <div class="status-item">
+                    <span>境界：</span>
+                    <span id="realm">杂役弟子</span>
+                </div>
+                <div class="status-item">
+                    <span>灵石：</span>
+                    <span id="spirit-stones">0</span>
+                </div>
+                <div class="status-item">
+                    <span>声望：</span>
+                    <span id="reputation">0</span>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="game-content">
+                <div id="story-text" class="story-text"></div>
+                <div id="choices" class="choices"></div>
+            </div>
+        </main>
+
+        <div class="game-menu">
+            <button id="cultivation-btn">修炼</button>
+            <button id="inventory-btn">背包</button>
+            <button id="relationships-btn">关系</button>
+            <button id="save-btn">存档</button>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html> 
