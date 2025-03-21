@@ -1,12 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap');
 
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #34495e;
-    --accent-color: #e74c3c;
+    --accent-color: #c0392b;
     --text-color: #2c3e50;
-    --background-color: #f5f6fa;
+    --background-color: #f8f9fa;
     --ink-color: #2c3e50;
+    --light-ink: rgba(44, 62, 80, 0.1);
+    --paper-color: #fff;
+    --border-color: #ddd;
 }
 
 * {
@@ -20,117 +23,427 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="white" /><path d="M0,0 Q50,50 100,100 M100,0 Q50,50 0,100" stroke="rgba(0,0,0,0.03)" stroke-width="1" fill="none" /></svg>');
+    background-size: 100px 100px;
 }
 
 .game-container {
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
     padding: 20px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 header {
     text-align: center;
     margin-bottom: 30px;
-    padding: 20px;
-    background: linear-gradient(to right, rgba(44, 62, 80, 0.1), rgba(44, 62, 80, 0.05));
+    padding: 25px;
+    background: linear-gradient(to right, rgba(44, 62, 80, 0.05), rgba(44, 62, 80, 0.02));
     border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent-color), transparent);
 }
 
 h1 {
-    font-size: 2.5em;
+    font-size: 2.8em;
     color: var(--ink-color);
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+h1::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 25%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--ink-color), transparent);
 }
 
 .status-bar {
     display: flex;
     justify-content: space-around;
-    padding: 10px;
+    padding: 15px;
     background: rgba(255, 255, 255, 0.8);
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+    margin-top: 10px;
 }
 
 .status-item {
     display: flex;
     gap: 5px;
+    position: relative;
+    padding: 0 15px;
+}
+
+.status-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 70%;
+    width: 1px;
+    background: var(--light-ink);
 }
 
 .game-content {
     flex: 1;
-    background: white;
-    padding: 20px;
+    background: var(--paper-color);
+    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.game-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="white" /><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(0,0,0,0.02)" stroke-width="0.5" fill="none" /></svg>');
+    background-size: 20px 20px;
+    z-index: -1;
 }
 
 .story-text {
     font-size: 1.2em;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     line-height: 1.8;
+    text-align: justify;
+    color: var(--ink-color);
 }
 
 .choices {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .choice-btn {
-    padding: 12px 20px;
+    padding: 14px 20px;
     background: transparent;
-    border: 2px solid var(--ink-color);
+    border: 1px solid var(--ink-color);
     border-radius: 4px;
     color: var(--ink-color);
     font-family: 'Noto Serif SC', serif;
     font-size: 1em;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent-color);
+    transition: all 0.3s ease;
+    opacity: 0;
 }
 
 .choice-btn:hover {
-    background: var(--ink-color);
-    color: white;
+    background: rgba(44, 62, 80, 0.05);
+    transform: translateX(5px);
+}
+
+.choice-btn:hover::before {
+    opacity: 1;
 }
 
 .game-menu {
     display: flex;
     justify-content: space-around;
     padding: 15px;
-    background: white;
+    background: var(--paper-color);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
 }
 
 .game-menu button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background: transparent;
-    border: 2px solid var(--ink-color);
+    border: 1px solid var(--ink-color);
     border-radius: 4px;
     color: var(--ink-color);
     font-family: 'Noto Serif SC', serif;
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-menu button::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
 }
 
 .game-menu button:hover {
-    background: var(--ink-color);
+    background: rgba(44, 62, 80, 0.05);
+}
+
+.game-menu button:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Modal styles for cultivation, inventory, etc. */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--paper-color);
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: var(--ink-color);
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    padding: 10px 15px;
+    background: transparent;
+    border: none;
+    font-family: 'Noto Serif SC', serif;
+    cursor: pointer;
+    position: relative;
+}
+
+.tab-button.active {
+    color: var(--accent-color);
+}
+
+.tab-button.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Progress bars for cultivation */
+.progress-container {
+    margin-bottom: 15px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    height: 10px;
+    background: var(--light-ink);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--accent-color);
+    width: 0;
+    transition: width 0.5s ease;
+}
+
+/* Inventory items */
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.inventory-item {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.inventory-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.item-image {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+/* Relationships styles */
+.relationship-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.relationship-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--light-ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+}
+
+.relationship-info {
+    flex: 1;
+}
+
+.relationship-actions {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.relationship-actions button {
+    padding: 5px 10px;
+    font-size: 0.8em;
+}
+
+/* User profile button */
+.user-profile {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--light-ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover {
+    background: var(--accent-color);
     color: white;
 }
 
-@media (max-width: 600px) {
+/* Game notifications */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    background: var(--paper-color);
+    border-left: 4px solid var(--accent-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    z-index: 1100;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
     .game-container {
         padding: 10px;
     }
     
     .status-bar {
-        flex-direction: column;
-        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .status-item {
+        width: 50%;
+        padding: 10px 5px;
+    }
+    
+    .status-item:not(:last-child)::after {
+        display: none;
     }
     
     .game-menu {
@@ -140,5 +453,15 @@ h1 {
     
     .game-menu button {
         flex: 1 1 calc(50% - 10px);
+        padding: 12px 10px;
+    }
+    
+    .modal-content {
+        max-width: 95%;
+        padding: 20px;
+    }
+    
+    .inventory-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 } 

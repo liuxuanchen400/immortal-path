@@ -5,23 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>仙途抉择</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="game-container">
         <header>
+            <div class="user-profile">
+                <i class="fas fa-user"></i>
+            </div>
             <h1>仙途抉择</h1>
             <div class="status-bar">
                 <div class="status-item">
-                    <span>境界：</span>
+                    <span><i class="fas fa-star"></i> 境界：</span>
                     <span id="realm">杂役弟子</span>
                 </div>
                 <div class="status-item">
-                    <span>灵石：</span>
+                    <span><i class="fas fa-gem"></i> 灵石：</span>
                     <span id="spirit-stones">0</span>
                 </div>
                 <div class="status-item">
-                    <span>声望：</span>
+                    <span><i class="fas fa-award"></i> 声望：</span>
                     <span id="reputation">0</span>
+                </div>
+                <div class="status-item">
+                    <span><i class="fas fa-calendar"></i> 时间：</span>
+                    <span id="game-time">1年1月</span>
                 </div>
             </div>
         </header>
@@ -34,12 +42,227 @@
         </main>
 
         <div class="game-menu">
-            <button id="cultivation-btn">修炼</button>
-            <button id="inventory-btn">背包</button>
-            <button id="relationships-btn">关系</button>
-            <button id="save-btn">存档</button>
+            <button id="cultivation-btn"><i class="fas fa-magic"></i> 修炼</button>
+            <button id="inventory-btn"><i class="fas fa-scroll"></i> 背包</button>
+            <button id="relationships-btn"><i class="fas fa-users"></i> 关系</button>
+            <button id="save-btn"><i class="fas fa-save"></i> 存档</button>
         </div>
     </div>
+
+    <!-- 修炼系统模态框 -->
+    <div id="cultivation-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>修炼系统</h2>
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="internal">内功心法</button>
+                <button class="tab-button" data-tab="external">外功锻体</button>
+                <button class="tab-button" data-tab="alchemy">炼丹</button>
+                <button class="tab-button" data-tab="forging">炼器</button>
+            </div>
+            
+            <div class="tab-content active" id="internal-tab">
+                <h3>内功修炼</h3>
+                <p>每日分配灵气修炼，提升内功修为，解锁特殊技能。</p>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>修为进度</span>
+                        <span id="internal-progress-value">0/1000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="internal-progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="cultivation-options">
+                    <h4>修炼选项</h4>
+                    <div class="cultivation-actions">
+                        <button id="meditate-btn">冥想修炼 (+10修为/次)</button>
+                        <button id="spirit-btn">灵气引导 (+50修为/100灵石)</button>
+                        <button id="breakthrough-btn" disabled>尝试突破</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="external-tab">
+                <h3>外功锻体</h3>
+                <p>提升肉身强度，降低渡劫难度。</p>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>体魄强度</span>
+                        <span id="external-progress-value">0/1000</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="external-progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="cultivation-options">
+                    <h4>锻体选项</h4>
+                    <div class="cultivation-actions">
+                        <button id="practice-btn">基础炼体 (+10体魄/次)</button>
+                        <button id="advanced-btn">高级锻体 (+50体魄/100灵石)</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="alchemy-tab">
+                <h3>炼丹系统</h3>
+                <p>炼制丹药，提升修炼效率和战斗能力。</p>
+                
+                <div class="alchemy-recipes">
+                    <h4>丹方</h4>
+                    <div class="recipe-list">
+                        <div class="recipe-item">
+                            <h5>聚气丹</h5>
+                            <p>材料: 灵草(3)、赤炎果(1)</p>
+                            <p>效果: 使用后获得100点内功修为</p>
+                            <button class="craft-btn" data-recipe="energy-pill">炼制</button>
+                        </div>
+                        <div class="recipe-item">
+                            <h5>壮体丹</h5>
+                            <p>材料: 铁木根(2)、山参(2)</p>
+                            <p>效果: 使用后获得100点体魄</p>
+                            <button class="craft-btn" data-recipe="strength-pill">炼制</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="forging-tab">
+                <h3>炼器系统</h3>
+                <p>锻造法器，增强战斗能力和特殊效果。</p>
+                
+                <div class="forging-recipes">
+                    <h4>器物图纸</h4>
+                    <div class="recipe-list">
+                        <div class="recipe-item">
+                            <h5>引灵剑</h5>
+                            <p>材料: 精铁(5)、灵玉(2)、剑胚(1)</p>
+                            <p>效果: 战斗力+100，修炼效率+10%</p>
+                            <button class="craft-btn" data-recipe="spirit-sword">锻造</button>
+                        </div>
+                        <div class="recipe-item">
+                            <h5>聚灵珠</h5>
+                            <p>材料: 灵石(10)、水晶(3)</p>
+                            <p>效果: 储存灵气，可随时恢复灵力</p>
+                            <button class="craft-btn" data-recipe="spirit-orb">锻造</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 背包系统模态框 -->
+    <div id="inventory-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>物品背包</h2>
+            <div class="tab-buttons">
+                <button class="tab-button active" data-tab="items">丹药材料</button>
+                <button class="tab-button" data-tab="equipment">法器装备</button>
+                <button class="tab-button" data-tab="treasures">奇遇珍宝</button>
+            </div>
+            
+            <div class="tab-content active" id="items-tab">
+                <div class="inventory-grid" id="items-container">
+                    <!-- 物品会通过JS动态添加 -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="equipment-tab">
+                <div class="inventory-grid" id="equipment-container">
+                    <!-- 装备会通过JS动态添加 -->
+                </div>
+            </div>
+            
+            <div class="tab-content" id="treasures-tab">
+                <div class="inventory-grid" id="treasures-container">
+                    <!-- 珍宝会通过JS动态添加 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关系系统模态框 -->
+    <div id="relationships-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>人际关系</h2>
+            <div id="relationships-container">
+                <!-- 关系卡片会通过JS动态添加 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 存档系统模态框 -->
+    <div id="save-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>游戏存档</h2>
+            <div class="save-actions">
+                <button id="save-game-btn">保存游戏</button>
+                <button id="load-game-btn">加载游戏</button>
+                <button id="delete-save-btn">删除存档</button>
+            </div>
+            <div id="save-slots">
+                <!-- 存档槽位会通过JS动态添加 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 用户信息模态框 -->
+    <div id="user-profile-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>修仙者信息</h2>
+            <div class="user-stats">
+                <div class="stat-item">
+                    <h3>基本属性</h3>
+                    <div class="stat-grid">
+                        <div class="stat">
+                            <span class="stat-label">内功修为:</span>
+                            <span class="stat-value" id="stat-internal">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">外功体魄:</span>
+                            <span class="stat-value" id="stat-external">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">炼丹水平:</span>
+                            <span class="stat-value" id="stat-alchemy">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">炼器技艺:</span>
+                            <span class="stat-value" id="stat-forging">0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <h3>渡劫信息</h3>
+                    <div class="stat-grid">
+                        <div class="stat">
+                            <span class="stat-label">渡劫次数:</span>
+                            <span class="stat-value" id="stat-tribulations">0</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">渡劫成功率:</span>
+                            <span class="stat-value" id="stat-success-rate">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 系统通知 -->
+    <div class="notification" id="notification">
+        <div class="notification-content">通知内容</div>
+    </div>
+
     <script src="game.js"></script>
 </body>
 </html> 
